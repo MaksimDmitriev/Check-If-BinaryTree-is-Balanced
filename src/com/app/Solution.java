@@ -6,15 +6,7 @@ public class Solution {
         if (root == null) {
             return true;
         }
-        int d_left = getDepth(root.left);
-        if (d_left == -1) {
-            return false;
-        }
-        int d_right = getDepth(root.right);
-        if (d_right == -1) {
-            return false;
-        }
-        return Math.abs(d_left - d_right) <= 1;
+        return getDepth(root) != -1;
     }
 
     private int getDepth(TreeNode root) {

@@ -2,29 +2,34 @@ package com.app;
 
 public class Solution {
 
-    boolean keepChecking;
-
     public boolean isBalanced(TreeNode root) {
-        keepChecking = true;
-        checkHeight(root);
-        return keepChecking;
+        if (root == null) {
+            return true;
+        }
+        int d_left = getDepth(root.left);
+        if (d_left == -1) {
+            return false;
+        }
+        int d_right = getDepth(root.right);
+        if (d_right == -1) {
+            return false;
+        }
+        return Math.abs(d_left - d_right) <= 1;
     }
 
-    int checkHeight(TreeNode root) {
-        if (root == null) {
-            return -1;
+    private int getDepth(TreeNode root) {
+        if (root != null) {
+            int d_left = getDepth(root.left);
+            if (d_left == -1) {
+                return -1;
+            }
+            int d_right = getDepth(root.right);
+            if (d_right == -1) {
+                return -1;
+            }
+            return Math.abs(d_left - d_right) > 1 ? -1 : Math.max(d_left, d_right) + 1;
         }
-
-        int left = 1 + checkHeight(root.left);
-        if (!keepChecking) {
-            return 0;
-        }
-        int right = 1 + checkHeight(root.right);
-        if (!keepChecking) {
-            return 0;
-        }
-        keepChecking = (Math.abs(left - right) <= 1);
-        return Math.max(left, right);
+        return 0;
     }
 
     public static class TreeNode {
@@ -34,6 +39,11 @@ public class Solution {
 
         TreeNode(int x) {
             val = x;
+        }
+
+        @Override
+        public String toString() {
+            return Integer.toString(val);
         }
     }
 
